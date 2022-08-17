@@ -4,7 +4,9 @@ import {
   ZoomableGroup,
   ComposableMap,
   Geographies,
-  Geography
+  Geography,
+  Graticule,
+  Sphere
 } from "react-simple-maps";
 import { GET_COUNTRIES, GET_COUNTRY_BY_CODE } from "../../api/CountryAPIs";
 
@@ -24,15 +26,22 @@ const MapChart = ({ setTooltipContent }) => {
     setTooltipContent(selectedCountryCode);
   }
   return (
-    <div data-tip="">
-      <ComposableMap>
-        <ZoomableGroup>
+    <div >
+      <ComposableMap projectionConfig={{
+    scale: 147,
+    
+  }}  >
+        {/* <ZoomableGroup> */}
+        
+        <Sphere stroke="grey" fill="#445b86" strokeWidth="1" />
+        <Graticule stroke="#F53" strokeWidth={0.5} />
           <Geographies geography="/map-features.json">
             {({ geographies }) =>
               geographies.map((geo) => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
+                  stroke="#EAEAEC"
                   onMouseEnter={() => {
                     handleCountryClick(geo.id)
                     
@@ -42,7 +51,7 @@ const MapChart = ({ setTooltipContent }) => {
                   }}
                   style={{
                     default: {
-                      fill: "#D6D6DA",
+                      fill: "#e2b48c",
                       outline: "none"
                     },
                     hover: {
@@ -58,7 +67,7 @@ const MapChart = ({ setTooltipContent }) => {
               ))
             }
           </Geographies>
-        </ZoomableGroup>
+        {/* </ZoomableGroup> */}
       </ComposableMap>
     </div>
   );

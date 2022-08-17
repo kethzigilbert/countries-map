@@ -1,3 +1,4 @@
+import { Paper, Typography } from '@mui/material'
 import Head from 'next/head'
 import WorldMap from '../components/maps'
 export default function Home() {
@@ -10,10 +11,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main >
-        <h1>
-        Maps Example
-        </h1>   
+      <main className='d-flex flex-column'>
+        {/* <Paper  variant="outlined"  className="p-3">
+       <Typography variant='h5' className='text-white'> World Map </Typography> 
+        </Paper>    */}
         <WorldMap/>   
       </main>
 
