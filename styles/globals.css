@@ -32,10 +32,9 @@ html {
 
 
 
-/* svg {
-  display: inline-block;
-  vertical-align: middle;
-} */
+.text-wrap{
+  overflow-wrap: break-word;
+}
 
 .text-white{
   color: '#ffffff';

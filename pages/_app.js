@@ -6,26 +6,24 @@ import { Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
+import { ScopedCssBaseline } from '@mui/material';
 
 
 function MyApp({ Component, pageProps }) {
   const {client} = useApollo();
   const theme = createTheme({
     palette: {
+      mode: 'dark',
       background: {
-        default: "#3a7ca5",
-        paper:"#16425B"
       },
-      primary: {
-        main: '#3a7ca5',
-      },
+    
     },
   });
   return <ThemeProvider theme={theme}>
   <ApolloProvider client={client}>
-  <Box>
+  <ScopedCssBaseline>
   <Component {...pageProps} />
-  </Box>
+  </ScopedCssBaseline>
   </ApolloProvider>
   </ThemeProvider>
   

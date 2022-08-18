@@ -1,73 +1,62 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
-import React, { memo, useState } from "react";
+
+import React, { memo } from "react";
 import {
-  ZoomableGroup,
   ComposableMap,
   Geographies,
   Geography,
   Graticule,
-  Sphere
+  Sphere,
+  Marker
 } from "react-simple-maps";
-import { GET_COUNTRIES, GET_COUNTRY_BY_CODE } from "../../api/CountryAPIs";
 
-const MapChart = ({ setTooltipContent }) => {
-    const [selectedCountryCode , setSelectedCountryCode] = useState(null)
-  
-    const [getCountryDetails ,{loading, error, data }]= useLazyQuery(GET_COUNTRY_BY_CODE);
-    console.log("data", data)
-  const handleCountryClick =async (code)=>{
-    
-    const selectedCountryCode = code.substring(0, 2)
-    console.log("code" ,selectedCountryCode);
-   const response = await getCountryDetails({
-    variables : {code : selectedCountryCode}
-})
-   console.log("response " , response?.data?.country)
-    setTooltipContent(selectedCountryCode);
-  }
+
+const MapChart = ({ handleCountryClick }) => {
+
+  const geoUrl =
+    "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
   return (
     <div >
       <ComposableMap projectionConfig={{
-    scale: 147,
-    
-  }}  >
-        {/* <ZoomableGroup> */}
-        
-        <Sphere stroke="grey" fill="#445b86" strokeWidth="1" />
-        <Graticule stroke="#F53" strokeWidth={0.5} />
-          <Geographies geography="/map-features.json">
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  stroke="#EAEAEC"
-                  onMouseEnter={() => {
+        scale: 147,
+
+      }}  >
+
+
+        <Sphere stroke="grey" fill="#2f487b" strokeWidth={1} />
+
+        <Graticule stroke="#e0e0e0" strokeWidth={0.5} />
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                stroke="#EAEAEC"
+
+                onClick={
+                  () => {
                     handleCountryClick(geo.id)
-                    
-                  }}
-                  onMouseLeave={() => {
-                    setTooltipContent("");
-                  }}
-                  style={{
-                    default: {
-                      fill: "#e2b48c",
-                      outline: "none"
-                    },
-                    hover: {
-                      fill: "#F53",
-                      outline: "none"
-                    },
-                    pressed: {
-                      fill: "#E42",
-                      outline: "none"
-                    }
-                  }}
-                />
-              ))
-            }
-          </Geographies>
-        {/* </ZoomableGroup> */}
+
+                  }
+                }
+                style={{
+                  default: {
+                    fill: "#9f8681",
+                    outline: "none"
+                  },
+                  hover: {
+                    fill: "#F53",
+                    outline: "none"
+                  },
+                }}
+              />
+            ))
+          }
+        </Geographies>
+        <Marker coordinates={[0, 0]}>
+
+        </Marker>
+
       </ComposableMap>
     </div>
   );
